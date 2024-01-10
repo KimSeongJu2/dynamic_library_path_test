@@ -12,8 +12,6 @@ String get _extension {
   throw UnsupportedError('This library cannot be used on platforms other than Windows, Android, and Linux.');
 }
 LibSerialPort get dylib {
-  print(File('libserialport.$_extension').existsSync() ? File('libserialport.$_extension').path : 'null');
-
   return _dylib ??= LibSerialPort(
     ffi.DynamicLibrary.open('libserialport.$_extension'),
   );

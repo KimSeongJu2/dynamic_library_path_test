@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:dynamic_library_path_test/src/sigrok_libserialport/enums.dart';
 import 'package:dynamic_library_path_test/src/sigrok_libserialport/reader.dart';
 
+import 'src/common/toast_message/toast.dart';
 import 'src/sigrok_libserialport/port.dart';
 
 void main() {
@@ -46,6 +47,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
+    _serialPort = SerialPort(_portName);
   }
 
   @override
@@ -89,23 +91,28 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void openDevice() {
-    _serialPort = SerialPort(_portName);
-    _serialPort.config
-      ..baudRate = 9600
-      ..bits = 8
-      ..parity = 0
-      ..stopBits = 1
-      ..xonXoff = 0
-      ..rts = 0
-      ..cts = 0
-      ..dtr = 0
-      ..dsr = 0
-      ..setFlowControl(0);
+    try {
+      _serialPort.config
+        ..baudRate = 9600
+        ..bits = 8
+        ..parity = 0
+        ..stopBits = 1
+        ..xonXoff = 0
+        ..rts = 0
+        ..cts = 0
+        ..dtr = 0
+        ..dsr = 0
+        ..setFlowControl(0);
 
-    if (_serialPort.open(mode: SerialPortMode.readWrite)) {
-      _listenSerialPort();
-    } else {
-      print('Failed to open serial port in read/write mode.[$_portName]');
+      if (_serialPort.open(mode: SerialPortMode.readWrite)) {
+        Toast.showBottomMessage(context, 'Port Open success');
+        _listenSerialPort();
+      } else {
+        Toast.showBottomMessage(context, 'Port Open failed');
+        print('Failed to open serial port in read/write mode.[$_portName]');
+      }
+    } catch (exception) {
+      Toast.showBottomMessage(context, exception.toString());
     }
   }
 
@@ -129,8 +136,10 @@ class _MyHomePageState extends State<MyHomePage> {
   void availablePorts() {
     final ports = SerialPort.availablePorts;
     setState(() {
-      _availablePorts = ports.toString();
+      // _availablePorts = ports.join('\n');
+      _availablePorts = ports.map((port) => '$port\n').join();
     });
+    Toast.showBottomMessage(context, _availablePorts);
     print(ports);
   }
 }

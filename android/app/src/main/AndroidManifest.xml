@@ -2,6 +2,8 @@
     <application
         android:label="dynamic_library_path_test"
         android:name="${applicationName}"
+        android:preserveLegacyExternalStorage="true"
+        android:requestLegacyExternalStorage="true"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
