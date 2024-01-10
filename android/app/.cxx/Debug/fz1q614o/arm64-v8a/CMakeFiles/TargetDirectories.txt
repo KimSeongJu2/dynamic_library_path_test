@@ -1,0 +1,2 @@
+C:/Source/Greendote/Flutter/dynamic_library_path_test/android/app/.cxx/Debug/fz1q614o/arm64-v8a/CMakeFiles/edit_cache.dir
+C:/Source/Greendote/Flutter/dynamic_library_path_test/android/app/.cxx/Debug/fz1q614o/arm64-v8a/CMakeFiles/rebuild_cache.dir

@@ -1,0 +1,28 @@
+{
+  "buildFiles": [
+    "/Users/kimseongju/Projects/dynamic_library_path_test/android/app/CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "/Users/kimseongju/Library/Android/sdk/cmake/3.18.1/bin/ninja",
+      "-C",
+      "/Users/kimseongju/Projects/dynamic_library_path_test/android/app/.cxx/Debug/6l696j31/x86_64",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "/Users/kimseongju/Library/Android/sdk/cmake/3.18.1/bin/ninja",
+    "-C",
+    "/Users/kimseongju/Projects/dynamic_library_path_test/android/app/.cxx/Debug/6l696j31/x86_64",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {},
+  "toolchains": {
+    "toolchain": {
+      "cCompilerExecutable": "/Users/kimseongju/Library/Android/sdk/ndk/23.1.7779620/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang.lld",
+      "cppCompilerExecutable": "/Users/kimseongju/Library/Android/sdk/ndk/23.1.7779620/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++.lld"
+    }
+  },
+  "cFileExtensions": [],
+  "cppFileExtensions": []
+}

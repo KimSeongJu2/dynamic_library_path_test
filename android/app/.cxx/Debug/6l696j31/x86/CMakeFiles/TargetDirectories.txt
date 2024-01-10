@@ -1,0 +1,2 @@
+/Users/kimseongju/Projects/dynamic_library_path_test/android/app/.cxx/Debug/6l696j31/x86/CMakeFiles/rebuild_cache.dir
+/Users/kimseongju/Projects/dynamic_library_path_test/android/app/.cxx/Debug/6l696j31/x86/CMakeFiles/edit_cache.dir
