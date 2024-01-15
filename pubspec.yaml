@@ -45,12 +45,15 @@ dependencies:
   # Supports Android, iOS, Linux, macOS and Windows. Not all methods are supported on all platforms.
   path_provider: ^2.0.2
 
-  # This plugin provides a cross-platform (iOS, Android) API to request permissions and check their status.
-  # You can also open the device's app settings so users can grant permission.
-  # On Android, you can show a rationale for requesting permission.
-  permission_handler: ^11.1.0
+  # The best package for cp949 decoding/encoding. support null-safety,
+  # less memory comsumption. include examples and tests #encoding#korean#cp949#euc-kr
+  cp949_codec: ^1.0.0  # path: ^1.8.0
 
-  baseflow_plugin_template: ^2.1.2
+  # RxDart extends the capabilities of Dart Streams and StreamControllers.
+  # Dart comes with a very decent Streams API out-of-the-box;
+  # rather than attempting to provide an alternative to this API,
+  # RxDart adds functionality from the reactive extensions specification on top of it.
+  rxdart: ^0.27.7
 
 dev_dependencies:
   flutter_test:
