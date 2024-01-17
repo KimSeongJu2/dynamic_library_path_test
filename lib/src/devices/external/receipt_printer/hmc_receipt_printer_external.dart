@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:cp949_codec/cp949_codec.dart';
 import 'package:dynamic_library_path_test/src/devices/external/interface/external.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -62,11 +63,11 @@ class HmcReceiptPrinterExternal implements External {
 
   void _listenInputStream() {
     _inputStream.stream.listen((data) {
-      List<int> dataBytes = [0x41]; // Uint8List.fromList(cp949.encode(data));
-      int result = _serialPort.write(Uint8List.fromList(dataBytes));
-      print('result: $result');
-      print(_serialPort.signals);
-      //_serialPort.write(Uint8List.fromList(cp949.encode(data)));
+      //Uint8List.fromList(cp949.encode(data));
+      //int result = _serialPort.write(Uint8List.fromList(dataBytes));
+      //print('result: $result');
+      //print(_serialPort.signals);
+      _serialPort.write(Uint8List.fromList(cp949.encode(data)));
       sleep(const Duration(milliseconds: 20));
     });
   }
