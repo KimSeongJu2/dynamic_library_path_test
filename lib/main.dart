@@ -125,6 +125,18 @@ class _MyHomePageState extends State<MyHomePage> {
     try {
       _serialPort = SerialPort(selectedPort);
 
+      _serialPort.config
+        ..baudRate = selectedBaudRate
+        ..bits = 8
+        ..parity = 0
+        ..stopBits = 1
+        ..xonXoff = 0
+        ..rts = 0
+        ..cts = 0
+        ..dtr = 0
+        ..dsr = 0
+        ..setFlowControl(0);
+
       if (_serialPort.open(mode: SerialPortMode.readWrite)) {
         _serialPort.config
           ..baudRate = selectedBaudRate
@@ -142,7 +154,8 @@ class _MyHomePageState extends State<MyHomePage> {
         _listenSerialPort();
       } else {
         Toast.showBottomMessage(context, 'Port Open failed');
-        print('Failed to open serial port in read/write mode.[$_portName]');
+        print('Failed to open serial port in read/write mode.[$selectedPort]');
+        print(SerialPort.lastError == null ? 'Unknown error occurred.' : SerialPort.lastError!.message);
       }
     } catch (exception) {
       Toast.showBottomMessage(context, exception.toString());

@@ -43,10 +43,9 @@ class _ReceiptPrinterTestState extends State<ReceiptPrinterTest> {
       'baudRate': widget.baudRate,
       'dataBits': 8,
       'parity': 0,
-      'handshake': 2,
       'stopBits': 1,
       'xOnxOff': 0,
-      'requestToSend': 1,
+      'requestToSend': 0,
       'cleanToSend': 0,
       'dataTerminalReady': 0,
       'dataSetReady': 0,
@@ -56,17 +55,21 @@ class _ReceiptPrinterTestState extends State<ReceiptPrinterTest> {
     if (_receiptPrinter == null || !_receiptPrinter!.isConnected) {
       _receiptPrinter = HmcReceiptPrinter();
       _receiptPrinter!.connect(fakes);
+    } else {
+      // _receiptPrinter!.disconnect();
+      // _receiptPrinter = HmcReceiptPrinter();
+      // _receiptPrinter!.connect(fakes);
     }
 
     if (_receiptPrinter!.isConnected) {
       HmcReceiptPrinterParsing parsing = HmcReceiptPrinterParsing();
 
-      String data = 'C';
-      _receiptPrinter!.send(HmcReceiptPrinterCommand.printText(printText:  data, isNewLine: false));
+      // String data = 'C';
+      // _receiptPrinter!.send(HmcReceiptPrinterCommand.printText(printText: data, isNewLine: false));
       // _receiptPrinter!.send(HmcReceiptPrinterCommand.lineFeed(feedHeight: parsing.feedHeight5));
       // _receiptPrinter!.send(HmcReceiptPrinterCommand.paperCutting());
 
-      /*_receiptPrinter!.send(HmcReceiptPrinterCommand.textAlign(align: parsing.centerAlign));
+      _receiptPrinter!.send(HmcReceiptPrinterCommand.textAlign(align: parsing.centerAlign));
       _receiptPrinter!.send(HmcReceiptPrinterCommand.printText(printText: 'Test Print Data'));
       _receiptPrinter!.send(HmcReceiptPrinterCommand.printText(printText: DateTime.now().toString()));
       _receiptPrinter!.send(HmcReceiptPrinterCommand.printText(printText: 'Line 1'));
@@ -81,12 +84,12 @@ class _ReceiptPrinterTestState extends State<ReceiptPrinterTest> {
       _receiptPrinter!.send(HmcReceiptPrinterCommand.printText(printText: 'Line 4'));
       _receiptPrinter!.send(HmcReceiptPrinterCommand.printText(printText: 'Line 5'));
       _receiptPrinter!.send(HmcReceiptPrinterCommand.printText(printText: 'Line 6'));
-      *//*_receiptPrinter!.send(HmcReceiptPrinterCommand.printTextSpaceBetween(
-          printText: ' 좌측정렬 ${parsing.splitter}우측정렬', splitter: parsing.splitter));*//*
+      _receiptPrinter!.send(HmcReceiptPrinterCommand.printTextSpaceBetween(
+          printText: ' 좌측정렬 ${parsing.splitter}우측정렬', splitter: parsing.splitter));
       _receiptPrinter!.send(HmcReceiptPrinterCommand.zoomFont(zoomFormat: parsing.clearFormat));
       _receiptPrinter!.send(HmcReceiptPrinterCommand.textAlign(align: parsing.leftAlign));
       _receiptPrinter!.send(HmcReceiptPrinterCommand.lineFeed(feedHeight: parsing.feedHeight5));
-      _receiptPrinter!.send(HmcReceiptPrinterCommand.paperCutting());*/
+      _receiptPrinter!.send(HmcReceiptPrinterCommand.paperCutting());
     }
   }
 }
