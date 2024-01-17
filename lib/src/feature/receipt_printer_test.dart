@@ -61,7 +61,12 @@ class _ReceiptPrinterTestState extends State<ReceiptPrinterTest> {
     if (_receiptPrinter!.isConnected) {
       HmcReceiptPrinterParsing parsing = HmcReceiptPrinterParsing();
 
-      _receiptPrinter!.send(HmcReceiptPrinterCommand.textAlign(align: parsing.centerAlign));
+      String data = 'C';
+      _receiptPrinter!.send(HmcReceiptPrinterCommand.printText(printText:  data, isNewLine: false));
+      // _receiptPrinter!.send(HmcReceiptPrinterCommand.lineFeed(feedHeight: parsing.feedHeight5));
+      // _receiptPrinter!.send(HmcReceiptPrinterCommand.paperCutting());
+
+      /*_receiptPrinter!.send(HmcReceiptPrinterCommand.textAlign(align: parsing.centerAlign));
       _receiptPrinter!.send(HmcReceiptPrinterCommand.printText(printText: 'Test Print Data'));
       _receiptPrinter!.send(HmcReceiptPrinterCommand.printText(printText: DateTime.now().toString()));
       _receiptPrinter!.send(HmcReceiptPrinterCommand.printText(printText: 'Line 1'));
@@ -76,12 +81,12 @@ class _ReceiptPrinterTestState extends State<ReceiptPrinterTest> {
       _receiptPrinter!.send(HmcReceiptPrinterCommand.printText(printText: 'Line 4'));
       _receiptPrinter!.send(HmcReceiptPrinterCommand.printText(printText: 'Line 5'));
       _receiptPrinter!.send(HmcReceiptPrinterCommand.printText(printText: 'Line 6'));
-      _receiptPrinter!.send(HmcReceiptPrinterCommand.printTextSpaceBetween(
-          printText: ' 좌측정렬 ${parsing.splitter}우측정렬', splitter: parsing.splitter));
+      *//*_receiptPrinter!.send(HmcReceiptPrinterCommand.printTextSpaceBetween(
+          printText: ' 좌측정렬 ${parsing.splitter}우측정렬', splitter: parsing.splitter));*//*
       _receiptPrinter!.send(HmcReceiptPrinterCommand.zoomFont(zoomFormat: parsing.clearFormat));
       _receiptPrinter!.send(HmcReceiptPrinterCommand.textAlign(align: parsing.leftAlign));
       _receiptPrinter!.send(HmcReceiptPrinterCommand.lineFeed(feedHeight: parsing.feedHeight5));
-      _receiptPrinter!.send(HmcReceiptPrinterCommand.paperCutting());
+      _receiptPrinter!.send(HmcReceiptPrinterCommand.paperCutting());*/
     }
   }
 }

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
@@ -26,6 +27,7 @@ class HmcReceiptPrinterExternal implements External {
     } catch (e) {
       throw Exception('The serial port named ${serialPortInfo.portName} does not exist.');
     }
+    // var config = _serialPort.config;
 
     if (_serialPort.open(mode: SerialPortMode.readWrite)) {
       _serialPort.config
@@ -39,6 +41,9 @@ class HmcReceiptPrinterExternal implements External {
         ..dtr = serialPortInfo.dataTerminalReady
         ..dsr = serialPortInfo.dataSetReady
         ..setFlowControl(serialPortInfo.flowControl);
+
+      _serialPort.close();
+      _serialPort.openReadWrite();
 
       _listenSerialPort();
       _listenInputStream();
@@ -62,10 +67,44 @@ class HmcReceiptPrinterExternal implements External {
 
   void _listenInputStream() {
     _inputStream.stream.listen((data) {
-      _serialPort.write(Uint8List.fromList(cp949.encode(data)));
+       _serialPort.write(Uint8List.fromList(cp949.encode(data)));
       sleep(const Duration(milliseconds: 20));
     });
   }
+
+  // Bigendian 전송 테스트
+  // void _listenInputStream() {
+  //   _inputStream.stream.listen((data) {
+  //     // 데이터를 바이트 배열로 변환
+  //     List<int> dataBytes = Uint8List.fromList(cp949.encode(data));
+  //
+  //     // 바이트 배열을 big-endian으로 변환
+  //     List<int> bigEndianData = [];
+  //     for (int i = dataBytes.length - 1; i >= 0; i--) {
+  //       bigEndianData.add(dataBytes[i]);
+  //     }
+  //
+  //     // _serialPort로 보내기
+  //     _serialPort.write(Uint8List.fromList(bigEndianData));
+  //
+  //     sleep(const Duration(milliseconds: 20));
+  //   });
+  // }
+
+  // Asciicode 전송 테스트
+  // void _listenInputStream() {
+  //   _inputStream.stream.listen((data) {
+  //     try {
+  //       // ASCII로 인코딩합니다. ASCII 범위 밖의 문자가 있으면 예외가 발생할 수 있습니다.
+  //       var asciiData = ascii.encode(data);
+  //       _serialPort.write(Uint8List.fromList(asciiData));
+  //     } catch (e) {
+  //       // ASCII 인코딩 중에 오류가 발생하면 처리합니다.
+  //       print("Error encoding data to ASCII: $e");
+  //     }
+  //     sleep(const Duration(milliseconds: 20));
+  //   });
+  // }
 
   void _listenSerialPort() {
     _serialPortReader = SerialPortReader(_serialPort);
