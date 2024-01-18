@@ -55,6 +55,8 @@ dependencies:
   # RxDart adds functionality from the reactive extensions specification on top of it.
   rxdart: ^0.27.7
 
+  charset_converter: ^2.1.2
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

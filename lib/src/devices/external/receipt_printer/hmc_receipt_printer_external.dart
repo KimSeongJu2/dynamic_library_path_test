@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
@@ -62,12 +63,18 @@ class HmcReceiptPrinterExternal implements External {
   }
 
   void _listenInputStream() {
-    _inputStream.stream.listen((data) {
+    _inputStream.stream.listen((dataSend) {
       //Uint8List.fromList(cp949.encode(data));
       //int result = _serialPort.write(Uint8List.fromList(dataBytes));
-      //print('result: $result');
-      //print(_serialPort.signals);
-      _serialPort.write(Uint8List.fromList(cp949.encode(data)));
+      final data = utf8.encode(dataSend);
+      final data2 = Uint8List.fromList(cp949.encode(dataSend));
+
+      print(data);
+      print(data2);
+
+      _serialPort.write(Uint8List.fromList(data));
+      // _serialPort.write(Uint8List.fromList(cp949.encode(data)));
+
       sleep(const Duration(milliseconds: 20));
     });
   }
