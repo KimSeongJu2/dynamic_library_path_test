@@ -42,6 +42,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final TextEditingController _editController = TextEditingController();
+
   late SerialPort _serialPort;
   late SerialPortReader _serialPortReader;
   final String _portName = '/dev/ttyS6';
@@ -49,7 +51,7 @@ class _MyHomePageState extends State<MyHomePage> {
   // final String _portName = '/dev/cu.wchusbserial140';
   String _receivedData = '';
   String selectedPort = '';
-  int selectedBaudRate = 9600;
+  int selectedBaudRate = 19200;
   late List<String> availablePorts = [];
   late List<int> availableBaudRates = [];
 
@@ -74,30 +76,52 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            DropdownItems(
-              titleText: 'Port: ',
-              selectedItem: selectedPort,
-              dropdownList: availablePorts,
-              callback: (selectedItem) => setState(() => selectedPort = selectedItem),
+        child: GestureDetector(
+          onTap: () => FocusScope.of(context).unfocus(),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                DropdownItems(
+                  titleText: 'Port: ',
+                  selectedItem: selectedPort,
+                  dropdownList: availablePorts,
+                  callback: (selectedItem) => setState(() => selectedPort = selectedItem),
+                ),
+                const SizedBox(height: 30),
+                DropdownItems(
+                  titleText: 'Baud Rate: ',
+                  selectedItem: selectedBaudRate,
+                  dropdownList: availableBaudRates,
+                  callback: (selectedItem) => setState(() => selectedBaudRate = selectedItem),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 100.0),
+                  child: TextField(
+                    controller: _editController,
+                    decoration: const InputDecoration(
+                      // labelText: 'Command',
+                      hintText: 'Send Command',
+                      labelStyle: TextStyle(color: Colors.green),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                        borderSide: BorderSide(width: 1, color: Colors.green),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                        borderSide: BorderSide(width: 1, color: Colors.green),
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                      ),
+                    ),
+                  ),
+                ),
+                Text(availablePorts.map((port) => '$port\n').join()),
+                Text(_receivedData, style: Theme.of(context).textTheme.headlineMedium),
+              ],
             ),
-            const SizedBox(height: 30),
-            DropdownItems(
-              titleText: 'Baud Rate: ',
-              selectedItem: selectedBaudRate,
-              dropdownList: availableBaudRates,
-              callback: (selectedItem) => setState(() => selectedBaudRate = selectedItem),
-            ),
-            Text(
-              availablePorts.map((port) => '$port\n').join(),
-            ),
-            Text(
-              _receivedData,
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
+          ),
         ),
       ),
       floatingActionButton: Row(
@@ -115,7 +139,7 @@ class _MyHomePageState extends State<MyHomePage> {
             child: const Icon(Icons.stop_circle_outlined),
           ),
           const SizedBox(width: 10),
-          ReceiptPrinterTest(portName: selectedPort, baudRate: selectedBaudRate),
+          ReceiptPrinterTest(portName: selectedPort, baudRate: selectedBaudRate, printText: _editController.text),
         ],
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );

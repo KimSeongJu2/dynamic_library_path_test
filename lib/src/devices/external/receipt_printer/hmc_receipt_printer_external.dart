@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
@@ -27,7 +26,6 @@ class HmcReceiptPrinterExternal implements External {
     } catch (e) {
       throw Exception('The serial port named ${serialPortInfo.portName} does not exist.');
     }
-    // var config = _serialPort.config;
 
     if (_serialPort.open(mode: SerialPortMode.readWrite)) {
       _serialPort.config
@@ -41,7 +39,7 @@ class HmcReceiptPrinterExternal implements External {
         ..dtr = serialPortInfo.dataTerminalReady
         ..dsr = serialPortInfo.dataSetReady
         ..setFlowControl(serialPortInfo.flowControl);
-
+      
       _listenSerialPort();
       _listenInputStream();
       return;
@@ -63,18 +61,8 @@ class HmcReceiptPrinterExternal implements External {
   }
 
   void _listenInputStream() {
-    _inputStream.stream.listen((dataSend) {
-      //Uint8List.fromList(cp949.encode(data));
-      //int result = _serialPort.write(Uint8List.fromList(dataBytes));
-      final data = utf8.encode(dataSend);
-      final data2 = Uint8List.fromList(cp949.encode(dataSend));
-
-      print(data);
-      print(data2);
-
-      _serialPort.write(Uint8List.fromList(data));
-      // _serialPort.write(Uint8List.fromList(cp949.encode(data)));
-
+    _inputStream.stream.listen((data) {
+      _serialPort.write(Uint8List.fromList(cp949.encode(data)));
       sleep(const Duration(milliseconds: 20));
     });
   }
